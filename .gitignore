@@ -1,0 +1,8 @@
+.dart_tool
+build
+android
+ios
+/ios
+/android
+pubspec.lock
+devtools_options.yaml
