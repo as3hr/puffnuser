@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/chauffuer/chauffuer_booking.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/luxury_party/car_details/vehicle_type_screen.dart';
 import 'package:taxi_booking/screens/v2/main/history/history.dart';
 import 'package:taxi_booking/screens/v2/main/profile/profile.dart';
 
@@ -24,7 +26,11 @@ class BottomScreen extends StatefulWidget {
 class _BottomScreenState extends State<BottomScreen> {
   int _selectedIndex = 0;
 
-  late final List<Widget> _widgetOptions;
+  static List<Widget> _widgetOptions = [
+    Placeholder(),
+    History(),
+    Profile(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -35,12 +41,17 @@ class _BottomScreenState extends State<BottomScreen> {
   @override
   void initState() {
     super.initState();
-    _widgetOptions = [
-      DashBoard(),
-      Placeholder(),
-      History(),
-      Profile(),
-    ];
+    switch (widget.screenType) {
+      case ScreenType.event:
+        _widgetOptions.insert(0, DashBoard());
+        break;
+      case ScreenType.chauffuer:
+        _widgetOptions.insert(0, ChauffeurBookingScreen());
+        break;
+      case ScreenType.luxuryParty:
+        _widgetOptions.insert(0, VehicleTypeScreen());
+        break;
+    }
   }
 
   @override
