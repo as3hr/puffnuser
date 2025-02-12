@@ -3,6 +3,8 @@ import 'package:taxi_booking/components/v2/booking_selection.dart';
 import 'package:taxi_booking/screens/v2/main/bottom_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
+import 'luxury_party/car_details/vehicle_type_screen.dart';
+
 class Booking extends StatelessWidget {
   const Booking({super.key});
 
@@ -39,7 +41,6 @@ class Booking extends StatelessWidget {
                   onTap: () {
                     launchScreen(
                         context, BottomScreen(screenType: ScreenType.chauffuer),
-                        // ChauffeurBookingScreen(),
                         pageRouteAnimation: PageRouteAnimation.Slide);
                   },
                 ),
@@ -50,8 +51,7 @@ class Booking extends StatelessWidget {
                   onTap: () {
                     launchScreen(
                       context,
-                      BottomScreen(screenType: ScreenType.luxuryParty),
-                      // VehicleTypeScreen(),
+                      VehicleTypeScreen(),
                       pageRouteAnimation: PageRouteAnimation.Slide,
                     );
                   },

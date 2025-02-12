@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_booking/components/v2/user_avatars.dart';
-import 'package:taxi_booking/screens/v2/main/dashboard/events/event_detail_screen.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/events/event_detail_screen.dart';
 
-import '../../../../utils/Extensions/app_common.dart';
+import '../../../../../utils/Extensions/app_common.dart';
 
-class DashBoard extends StatelessWidget {
-  const DashBoard({super.key});
+class EventPage extends StatelessWidget {
+  const EventPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        foregroundColor: Colors.white,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -240,104 +242,119 @@ class DashBoard extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-        backgroundColor: isSelected ? Color(0xFFAB29FF) : Colors.grey[200],
+        backgroundColor: isSelected ? Color(0xFFAB29FF) : Colors.white,
+        side: BorderSide(
+          color: Colors.black,
+          width: 1,
+        ),
         padding: EdgeInsets.symmetric(horizontal: 12),
       ),
     );
   }
 
   Widget _buildEventCard() {
-    return Container(
-      width: 300,
-      decoration: BoxDecoration(
-        color: Color(0xffEBE4FF).withOpacity(0.5),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.asset(
-              'images/event.png',
-              width: double.infinity,
-              fit: BoxFit.cover,
+    return Card(
+      elevation: 5,
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: Offset(0, 2),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Smoke-Friendly Night Ride',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+          ],
+          border: Border.all(color: Color(0xFF81A0B4)),
+        ),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              child: Image.asset(
+                'images/event.png',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Smoke-Friendly Night Ride',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.calendar_month,
-                      color: Colors.grey,
-                      size: 16,
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      'Nov 10 2024',
-                      style: TextStyle(
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
                         color: Colors.grey,
-                        fontSize: 12,
+                        size: 16,
                       ),
-                    ),
-                    SizedBox(width: 6),
-                    Icon(
-                      Icons.access_time,
-                      color: Colors.grey,
-                      size: 16,
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      '08.00 PM',
-                      style: TextStyle(
+                      SizedBox(width: 2),
+                      Text(
+                        'Nov 10 2024',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(width: 6),
+                      Icon(
+                        Icons.access_time,
                         color: Colors.grey,
-                        fontSize: 12,
+                        size: 16,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    UserAvatars(),
-                    Spacer(),
-                    Container(
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xFFAB29FF)),
-                        borderRadius: BorderRadius.circular(20),
+                      SizedBox(width: 2),
+                      Text(
+                        '08.00 PM',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
                       ),
-                      padding: EdgeInsets.all(4),
-                      child: Center(
-                        child: Text(
-                          "Book Now",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 9,
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      UserAvatars(),
+                      Spacer(),
+                      Container(
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xFFAB29FF)),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.all(4),
+                        child: Center(
+                          child: Text(
+                            "Book Now",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 9,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8),
-              ],
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

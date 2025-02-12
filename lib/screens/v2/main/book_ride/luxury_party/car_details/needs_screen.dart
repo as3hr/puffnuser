@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/screens/v2/main/book_ride/luxury_party/navigation_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 import '../../../../../../components/v2/selection_screen.dart';
+import '../../../bottom_screen.dart';
 
 class NeedsScreen extends StatelessWidget {
   const NeedsScreen({super.key});
@@ -15,7 +15,7 @@ class NeedsScreen extends StatelessWidget {
       onContinue: () {
         launchScreen(
           context,
-          NavigationScreen(),
+          BottomScreen(screenType: ScreenType.luxuryParty),
           pageRouteAnimation: PageRouteAnimation.Slide,
         );
       },

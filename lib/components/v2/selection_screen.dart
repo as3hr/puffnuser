@@ -166,7 +166,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
         label: Text(_options[index].label),
         selected: _options[index].selected,
         onSelected: (value) => _handleSelection(index, value),
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         selectedColor: Color(0xFF122981).withOpacity(0.2),
         labelStyle: TextStyle(
           color: _options[index].selected ? Color(0xFF122981) : Colors.black,

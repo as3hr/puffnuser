@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class RideBookedDialog extends StatelessWidget {
+  const RideBookedDialog({
+    Key? key,
+    required this.message,
+    required this.title,
+  }) : super(key: key);
+  final String title;
+  final String message;
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -13,12 +21,12 @@ class RideBookedDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Ride Booked",
+              title,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              "Your ride has been Booked Successfully",
+              message,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),

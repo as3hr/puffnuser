@@ -217,7 +217,9 @@ class _PaymentV2ScreenState extends State<PaymentV2Screen> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => RideBookedDialog(),
+                    builder: (context) => RideBookedDialog(
+                        title: "Ride Booked",
+                        message: "Your ride has been Booked Successfully"),
                   ).then((_) =>
                       Navigator.popUntil(context, (route) => route.isFirst));
                 },
@@ -276,7 +278,7 @@ class _PaymentV2ScreenState extends State<PaymentV2Screen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Color(0xFF122981) : Colors.grey,
+                color: isSelected ? Colors.green : Colors.grey,
                 width: 2,
               ),
             ),
@@ -287,7 +289,7 @@ class _PaymentV2ScreenState extends State<PaymentV2Screen> {
                       height: 12,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF122981),
+                        color: Colors.green,
                       ),
                     ),
                   )

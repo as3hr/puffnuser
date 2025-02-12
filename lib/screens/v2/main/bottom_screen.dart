@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/screens/v2/main/book_ride/chauffuer/chauffuer_booking.dart';
-import 'package:taxi_booking/screens/v2/main/book_ride/luxury_party/car_details/vehicle_type_screen.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/chauffuer/home_screen.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/luxury_party/navigation_screen.dart';
 import 'package:taxi_booking/screens/v2/main/history/history.dart';
 import 'package:taxi_booking/screens/v2/main/profile/profile.dart';
 
-import 'dashboard/dashboard.dart';
+import 'book_ride/events/event_page.dart';
 
 enum ScreenType {
   event,
@@ -26,11 +26,7 @@ class BottomScreen extends StatefulWidget {
 class _BottomScreenState extends State<BottomScreen> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = [
-    Placeholder(),
-    History(),
-    Profile(),
-  ];
+  static List<Widget> _widgetOptions = [];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,13 +39,28 @@ class _BottomScreenState extends State<BottomScreen> {
     super.initState();
     switch (widget.screenType) {
       case ScreenType.event:
-        _widgetOptions.insert(0, DashBoard());
+        _widgetOptions = [
+          EventPage(),
+          Placeholder(),
+          History(),
+          Profile(),
+        ];
         break;
       case ScreenType.chauffuer:
-        _widgetOptions.insert(0, ChauffeurBookingScreen());
+        _widgetOptions = [
+          HomeScreen(),
+          Placeholder(),
+          History(),
+          Profile(),
+        ];
         break;
       case ScreenType.luxuryParty:
-        _widgetOptions.insert(0, VehicleTypeScreen());
+        _widgetOptions = [
+          NavigationScreen(),
+          Placeholder(),
+          History(),
+          Profile(),
+        ];
         break;
     }
   }

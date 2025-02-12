@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_booking/components/v2/user_avatars.dart';
-import 'package:taxi_booking/screens/v2/main/dashboard/events/ticket_selection_screen.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/events/ticket_selection_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
 class EventDetailsScreen extends StatelessWidget {
@@ -96,15 +96,15 @@ class EventDetailsScreen extends StatelessWidget {
                               Spacer(),
                               Icon(Icons.calendar_today,
                                   size: 16, color: Colors.white),
-                              SizedBox(width: 4),
+                              SizedBox(width: 2),
                               Text(
                                 'Nov 10 2024',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: 6),
                               Icon(Icons.access_time,
                                   size: 16, color: Colors.white),
-                              SizedBox(width: 4),
+                              SizedBox(width: 2),
                               Text(
                                 '08:00 PM',
                                 style: TextStyle(color: Colors.white),

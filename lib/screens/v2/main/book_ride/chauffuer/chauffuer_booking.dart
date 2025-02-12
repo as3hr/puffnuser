@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/screens/v2/main/book_ride/chauffuer/optional_info.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
+
+import '../../../../v1/PaymentScreen.dart';
+import '../events/payment_screen.dart';
+import '../payment_v2/payment_v2.dart';
 
 class ChauffeurBookingScreen extends StatelessWidget {
   const ChauffeurBookingScreen({Key? key}) : super(key: key);
@@ -69,7 +72,7 @@ class ChauffeurBookingScreen extends StatelessWidget {
                 onPressed: () {
                   launchScreen(
                     context,
-                    OptionalInfoScreen(),
+                    PaymentScreenEvents(),
                     pageRouteAnimation: PageRouteAnimation.Slide,
                   );
                 },

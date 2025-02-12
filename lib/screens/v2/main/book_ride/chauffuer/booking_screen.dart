@@ -1,16 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../../components/v2/ride_booking_dialog.dart';
-import '../payment_v2/payment_v2.dart';
+import 'vehicle_selection_screen.dart';
 
-class RideBookingScreen extends StatefulWidget {
-  const RideBookingScreen({super.key});
+class BookingScreen extends StatefulWidget {
+  const BookingScreen({super.key});
 
   @override
-  State<RideBookingScreen> createState() => _RideBookingScreenState();
+  State<BookingScreen> createState() => _BookingScreenState();
 }
 
-class _RideBookingScreenState extends State<RideBookingScreen> {
+class _BookingScreenState extends State<BookingScreen> {
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+
+    if (picked != null && picked != selectedTime) {
+      setState(() {
+        selectedTime = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +52,7 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title:
-            const Text('Ride Booking', style: TextStyle(color: Colors.black)),
+            const Text('Book For Later', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -36,33 +67,6 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
               color: Color(0xff122981).withOpacity(0.5),
               colorBlendMode: BlendMode.darken,
             ),
-          ),
-
-          Positioned(
-            child: Image.asset(
-              "images/ic_car.png",
-              height: 30,
-            ),
-            top: 300,
-            left: 50,
-            right: 50,
-          ),
-          Positioned(
-            child: Image.asset(
-              "images/ic_car.png",
-              height: 30,
-            ),
-            top: 200,
-            right: 20,
-          ),
-
-          Positioned(
-            child: Image.asset(
-              "images/ic_car.png",
-              height: 30,
-            ),
-            top: 250,
-            left: 50,
           ),
 
           // Bottom Sheet
@@ -107,11 +111,9 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
                       const SizedBox(height: 20),
 
                       // Pickup Location
-                      const Text(
-                        'Pickup Location',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      const Text('Pickup Location',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 8),
                       TextField(
                         decoration: InputDecoration(
@@ -123,11 +125,9 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
                       const SizedBox(height: 16),
 
                       // Drop-off Location
-                      const Text(
-                        'Drop-off Location',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      const Text('Drop-off Location',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 8),
                       TextField(
                         decoration: InputDecoration(
@@ -137,90 +137,47 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        "Fare Estimate",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+
                       // Date & Time Selection
                       Row(
                         children: [
                           Expanded(
-                            child: Text(
-                              "Base Price",
-                              style: TextStyle(
-                                fontSize: 15,
+                            child: GestureDetector(
+                              onTap: () => _selectDate(context),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  selectedDate != null
+                                      ? DateFormat('dd MMM yyyy')
+                                          .format(selectedDate!)
+                                      : "Pick a date",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: Text(
-                              "Time",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              "Distance",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "45\$",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              "2:52 AM",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              "50 Miles",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Estimate Price",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 180),
-                          Expanded(
-                            child: Text(
-                              "65\$",
-                              style: TextStyle(
-                                fontSize: 15,
+                            child: GestureDetector(
+                              onTap: () => _selectTime(context),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  selectedTime != null
+                                      ? selectedTime!.format(context)
+                                      : "Pick a time",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
                               ),
                             ),
                           ),
@@ -235,16 +192,13 @@ class _RideBookingScreenState extends State<RideBookingScreen> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => RideBookedDialog(
-                                  title: "Ride Accepted",
-                                  message: "Your ride has been Accepted"),
-                            ).then((_) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaymentV2Screen())));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const VehicleSelectionScreen(),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff462FAB),

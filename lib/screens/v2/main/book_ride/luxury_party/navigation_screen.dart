@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:taxi_booking/screens/v2/main/book_ride/luxury_party/car_details/car_detail_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
-class NavigationScreen extends StatelessWidget {
+class NavigationScreen extends StatefulWidget {
   const NavigationScreen({Key? key}) : super(key: key);
 
+  @override
+  State<NavigationScreen> createState() => _NavigationScreenState();
+}
+
+class _NavigationScreenState extends State<NavigationScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +25,7 @@ class NavigationScreen extends StatelessWidget {
                   image: AssetImage('images/map.png'),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Color(0xffF75CFF),
+                    Color(0xff122981).withOpacity(0.5),
                     BlendMode.darken,
                   ),
                 ),
@@ -75,14 +81,11 @@ class NavigationScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.40),
+                    // SizedBox(height: MediaQuery.of(context).size.height * 0.40),
                     BottomSheet(
                       showDragHandle: true,
                       enableDrag: false,
                       clipBehavior: Clip.antiAlias,
-                      constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.6,
-                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(25)),
@@ -159,86 +162,85 @@ class NavigationScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 100,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    itemCount: 6,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          launchScreen(
-                                            context,
-                                            CarDetailsScreen(),
-                                            pageRouteAnimation:
-                                                PageRouteAnimation.Slide,
-                                          );
-                                        },
-                                        child: Stack(
-                                          clipBehavior: Clip.none,
-                                          children: [
-                                            Container(
-                                              width: 150,
-                                              margin: const EdgeInsets.only(
-                                                  right: 16),
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.topRight,
-                                                  colors: [
-                                                    Color.fromARGB(
-                                                        255, 207, 207, 130),
-                                                    Color(0xFF122981),
-                                                  ],
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    'limousine',
-                                                    style: const TextStyle(
-                                                      color: Color(0xffFFDF5A),
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 2),
-                                                  Text(
-                                                    'Premium ${index + 1}',
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
+                              SizedBox(
+                                height: 100,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  itemCount: 6,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        launchScreen(
+                                          context,
+                                          CarDetailsScreen(),
+                                          pageRouteAnimation:
+                                              PageRouteAnimation.Slide,
+                                        );
+                                      },
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Container(
+                                            width: 150,
+                                            margin: const EdgeInsets.only(
+                                                right: 16),
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff122981),
+                                                  Color(0xff222221),
                                                 ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
                                               ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            Positioned(
-                                              top: -80,
-                                              left: 0,
-                                              right: 0,
-                                              child: Image.asset(
-                                                  "images/ic_car.png"),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  'limousine',
+                                                  style: const TextStyle(
+                                                    color: Color(0xffFFDF5A),
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 2),
+                                                Text(
+                                                  'Premium ${index + 1}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                          ),
+                                          Positioned(
+                                            top: -10,
+                                            left: 0,
+                                            right: 0,
+                                            child: Image.asset(
+                                              "images/bentley.png",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
+                              ),
+                              SizedBox(
+                                height: 80,
                               ),
                             ],
                           ),

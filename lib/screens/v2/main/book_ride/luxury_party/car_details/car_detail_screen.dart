@@ -13,11 +13,25 @@ class CarDetailsScreen extends StatelessWidget {
         children: [
           Container(
             height: double.infinity,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('images/map.png'),
                 fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Color(0xff122981).withOpacity(0.5),
+                  BlendMode.darken,
+                ),
               ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 50,
+            right: 50,
+            bottom: 500,
+            child: Image.asset(
+              'images/route.png',
+              // height: 150,
             ),
           ),
           Positioned(

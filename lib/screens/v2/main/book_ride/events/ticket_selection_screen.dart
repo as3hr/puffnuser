@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_booking/screens/v2/main/book_ride/chauffuer/chauffuer_booking.dart';
+import 'package:taxi_booking/utils/Extensions/app_common.dart';
+
+import 'vehicle_list_screen.dart';
 
 class TicketSelectionScreen extends StatefulWidget {
   const TicketSelectionScreen({super.key});
@@ -219,7 +223,13 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      launchScreen(
+                        context,
+                        VehicleListScreen(),
+                        pageRouteAnimation: PageRouteAnimation.Slide,
+                      );
+                    },
                     child: Text(
                       'Add to Cart',
                       style: TextStyle(

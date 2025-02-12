@@ -132,3 +132,9 @@ flutter:
     - images/
     - images/flag/
     - images/icons/
+    - fonts/
+
+  fonts:
+    - family: Proxima Nova
+      fonts:
+        - asset: fonts/proximanova.otf

@@ -7,19 +7,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/firebase_option.dart';
 import '../network/RestApis.dart';
-import '../screens/v1/ChatScreen.dart';
-import '../screens/v1/RideDetailScreen.dart';
 import '../utils/Extensions/StringExtensions.dart';
 import '/model/FileModel.dart';
 import '/model/LanguageDataModel.dart';
 import 'AppTheme.dart';
 import 'language/AppLocalizations.dart';
 import 'language/BaseLanguage.dart';
-import 'model/LoginResponse.dart';
 import 'screens/v1/NoInternetScreen.dart';
 import 'screens/v2/splash/SplashScreen.dart';
 import 'service/ChatMessagesService.dart';
@@ -27,7 +23,6 @@ import 'service/NotificationService.dart';
 import 'service/UserServices.dart';
 import 'store/AppStore.dart';
 import 'utils/Colors.dart';
-import 'utils/Common.dart';
 import 'utils/Constants.dart';
 import 'utils/DataProvider.dart';
 import 'utils/Extensions/app_common.dart';
@@ -78,7 +73,7 @@ void main() async {
   await appStore.setUserEmail(sharedPref.getString(USER_EMAIL) ?? '',
       isInitialization: true);
   await appStore.setUserProfile(sharedPref.getString(USER_PROFILE_PHOTO) ?? '');
-  oneSignalSettings();
+  // oneSignalSettings();
   runApp(MyApp());
 }
 

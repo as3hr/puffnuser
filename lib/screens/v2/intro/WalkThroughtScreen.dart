@@ -107,7 +107,6 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
                     onPressed: () {
                       if (currentPage.toInt() >= 2) {
                         launchScreen(context, SocialScreen(), isNewTask: true);
-                        sharedPref.setBool(IS_FIRST_TIME, false);
                       } else {
                         pageController.nextPage(
                             duration: Duration(seconds: 1),
@@ -124,7 +123,6 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
             child: TextButton(
               onPressed: () {
                 launchScreen(context, SocialScreen(), isNewTask: true);
-                sharedPref.setBool(IS_FIRST_TIME, false);
               },
               child: Text(language.skip,
                   style: boldTextStyle(color: Colors.white)),
