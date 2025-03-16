@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
-import '../Common.dart';
 /// Circular Loader Widget
 class Loader extends StatefulWidget {
   final Color? color;
@@ -50,13 +48,7 @@ class LoaderState extends State<Loader> {
         padding: EdgeInsets.all(10),
         height: 40,
         width: 40,
-        decoration: widget.decoration ??
-            BoxDecoration(
-              color: widget.color ?? defaultLoaderBgColorGlobal,
-              shape: BoxShape.circle,
-              boxShadow: defaultBoxShadow(),
-            ),
-        //Progress color uses accentColor from ThemeData
+        decoration: widget.decoration,
         child: CircularProgressIndicator(
           strokeWidth: 2,
           value: widget.value,

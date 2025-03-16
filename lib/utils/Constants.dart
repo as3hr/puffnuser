@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 import 'images.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,11 +16,13 @@ const DOMAIN_URL =
 //endregion
 var uuid = Uuid();
 //region MQTT port and unique name
-final client = MqttServerClient.withPort(
-    "1abab143724b461aac209f01472f8742.s1.eu.hivemq.cloud", uuid.v1(), 8883);
+// final client = MqttServerClient.withPort(
+//     "1abab143724b461aac209f01472f8742.s1.eu.hivemq.cloud", uuid.v1(), 8883);
 const MQTT_UNIQUE_TOPIC_NAME =
     'driver/receiveride'; // Don't add underscore at the end of the url
 //endregion
+
+const tokenKey = "token";
 
 //region OneSignal Keys
 //You have to generate 2 onesignal account one for rider and one for driver
