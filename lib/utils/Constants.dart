@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'images.dart';
-import 'package:uuid/uuid.dart';
 
 //region App name
 const mAppName = 'oncab';
@@ -14,7 +13,6 @@ const GOOGLE_MAP_API_KEY = 'AIzaSyCc_o9yDDt17I4tZSJuel14WFB3YoKsH3M';
 const DOMAIN_URL =
     'https://Oncab.alitacode.com'; // Don't add slash at the end of the url
 //endregion
-var uuid = Uuid();
 //region MQTT port and unique name
 // final client = MqttServerClient.withPort(
 //     "1abab143724b461aac209f01472f8742.s1.eu.hivemq.cloud", uuid.v1(), 8883);
