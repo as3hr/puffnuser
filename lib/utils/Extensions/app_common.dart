@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../main.dart';
+import 'package:taxi_booking/utils/Colors.dart';
 import '../Constants.dart';
 
 TextStyle boldTextStyle(
@@ -11,7 +11,7 @@ TextStyle boldTextStyle(
     double? letterSpacing}) {
   return TextStyle(
       fontSize: size != null ? size.toDouble() : textBoldSizeGlobal,
-      color: color ?? textPrimaryColorGlobal,
+      color: color ?? textPrimaryColor,
       fontWeight: weight ?? FontWeight.bold,
       decoration: textDecoration ?? TextDecoration.none,
       letterSpacing: letterSpacing ?? 0);
@@ -21,7 +21,7 @@ TextStyle boldTextStyle(
 TextStyle primaryTextStyle({int? size, Color? color, FontWeight? weight}) {
   return TextStyle(
     fontSize: size != null ? size.toDouble() : textPrimarySizeGlobal,
-    color: color ?? textPrimaryColorGlobal,
+    color: color ?? textPrimaryColor,
     fontWeight: weight ?? FontWeight.normal,
   );
 }
@@ -35,7 +35,7 @@ TextStyle secondaryTextStyle({
 }) {
   return TextStyle(
     fontSize: size != null ? size.toDouble() : textSecondarySizeGlobal,
-    color: color ?? textSecondaryColorGlobal,
+    color: color ?? textSecondaryColor,
     decoration: textDecoration ?? TextDecoration.none,
     fontWeight: weight ?? FontWeight.normal,
   );
