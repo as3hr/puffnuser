@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/screens/auth/phone_sign_in.dart';
+import 'package:taxi_booking/screens/auth/login/login_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 import '../../components/submission_button.dart';
-import 'register_screen.dart';
+import 'register/register_screen.dart';
 
 class SocialScreen extends StatelessWidget {
   const SocialScreen({Key? key}) : super(key: key);
@@ -17,15 +17,12 @@ class SocialScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App Logo/Image
               Image.asset(
-                'images/welcome_image_car.png', // Make sure to add your image to images
+                'images/welcome_image_car.png',
                 height: 120,
                 width: 120,
               ),
               const SizedBox(height: 24),
-
-              // Welcome Text
               const Text(
                 'Welcome to PuffnRide',
                 style: TextStyle(
@@ -36,8 +33,6 @@ class SocialScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-
-              // Subtitle
               const Text(
                 'Your Ultimate Smoke-Friendly Ride\nExperience',
                 style: TextStyle(
@@ -47,50 +42,42 @@ class SocialScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 48),
-
-              // Phone Number Button
               SubmissionButton(
                 onTap: () {
                   launchScreen(
                     context,
-                    PhoneSignIn(),
+                    LoginScreen(),
                   );
                 },
-                text: 'Sign in With Phone Number',
+                text: 'Sign in',
               ),
+              // const SizedBox(height: 24),
+              // const Text(
+              //   'or continue with',
+              //   style: TextStyle(
+              //     color: Colors.black54,
+              //     fontSize: 14,
+              //   ),
+              // ),
               const SizedBox(height: 24),
-
-              // Or continue with text
-              const Text(
-                'or continue with',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Social Login Buttons
-              _buildSocialButton(
-                'Continue With Google',
-                'images/ic_google.png',
-                onPressed: () {},
-              ),
-              const SizedBox(height: 12),
-              _buildSocialButton(
-                'Continue With Apple',
-                'images/ic_apple.png',
-                onPressed: () {},
-              ),
-              const SizedBox(height: 12),
-              _buildSocialButton(
-                'Continue With Facebook',
-                'images/ic_facebook.png',
-                onPressed: () {},
-              ),
+              // _buildSocialButton(
+              //   'Continue With Google',
+              //   'images/ic_google.png',
+              //   onPressed: () {},
+              // ),
+              // const SizedBox(height: 12),
+              // _buildSocialButton(
+              //   'Continue With Apple',
+              //   'images/ic_apple.png',
+              //   onPressed: () {},
+              // ),
+              // const SizedBox(height: 12),
+              // _buildSocialButton(
+              //   'Continue With Facebook',
+              //   'images/ic_facebook.png',
+              //   onPressed: () {},
+              // ),
               const SizedBox(height: 48),
-
-              // Create Account Link
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

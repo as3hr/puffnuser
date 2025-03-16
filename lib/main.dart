@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taxi_booking/network/network_repository.dart';
 import 'package:taxi_booking/service/network_monitor.dart';
@@ -19,10 +20,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: mAppName,
+      defaultTransition: Transition.fadeIn,
       home: SplashScreen(),
     );
   }

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SubmissionButton extends StatelessWidget {
-  const SubmissionButton({super.key, required this.onTap, required this.text});
+  const SubmissionButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.isLoading = false,
+  });
   final VoidCallback onTap;
   final String text;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +30,15 @@ class SubmissionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(45),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
         ),
       ),
     );

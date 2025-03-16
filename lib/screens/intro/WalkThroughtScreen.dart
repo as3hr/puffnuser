@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_booking/main.dart';
 import 'package:taxi_booking/screens/auth/social_screen.dart';
 
 import '../../../utils/Constants.dart';
@@ -36,8 +37,9 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
   ];
 
   @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
+  void initState() {
+    super.initState();
+    appStorage.write(initializedKey, "initialized");
   }
 
   @override

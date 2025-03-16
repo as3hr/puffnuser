@@ -133,7 +133,7 @@ class PhoneSignIn extends StatelessWidget {
               onTap: () {
                 launchScreen(
                   context,
-                  Booking(),
+                  BookingScreen(),
                   isNewTask: true,
                   pageRouteAnimation: PageRouteAnimation.Slide,
                 );

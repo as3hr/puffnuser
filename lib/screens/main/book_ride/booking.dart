@@ -6,8 +6,8 @@ import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
 import 'luxury_party/car_details/vehicle_type_screen.dart';
 
-class Booking extends StatelessWidget {
-  const Booking({super.key});
+class BookingScreen extends StatelessWidget {
+  const BookingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,6 @@ class Booking extends StatelessWidget {
                   onTap: () {
                     launchScreen(
                         context, BottomScreen(screenType: ScreenType.event),
-                        // ChauffeurBookingScreen(),
                         pageRouteAnimation: PageRouteAnimation.Slide);
                   },
                 ),

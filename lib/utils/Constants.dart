@@ -11,7 +11,7 @@ const GOOGLE_MAP_API_KEY = 'AIzaSyCc_o9yDDt17I4tZSJuel14WFB3YoKsH3M';
 
 //region DomainUrl
 const DOMAIN_URL =
-    'https://Oncab.alitacode.com'; // Don't add slash at the end of the url
+    'https://puffnadmin.alitacode.com/api'; // Don't add slash at the end of the url
 //endregion
 //region MQTT port and unique name
 // final client = MqttServerClient.withPort(
@@ -21,6 +21,7 @@ const MQTT_UNIQUE_TOPIC_NAME =
 //endregion
 
 const tokenKey = "token";
+const initializedKey = "initialized";
 
 //region OneSignal Keys
 //You have to generate 2 onesignal account one for rider and one for driver

@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 16),
 
-              // Greeting Text
               const Text(
                 'Good evening, David!',
                 style: TextStyle(

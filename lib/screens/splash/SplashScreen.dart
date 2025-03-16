@@ -1,3 +1,7 @@
+import 'package:taxi_booking/main.dart';
+import 'package:taxi_booking/screens/auth/login/login_screen.dart';
+import 'package:taxi_booking/screens/main/book_ride/booking.dart';
+import 'package:taxi_booking/utils/Constants.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import '../intro/WalkThroughtScreen.dart';
@@ -28,7 +32,6 @@ class SplashScreenState extends State<SplashScreen> {
         _controller.play();
         _controller.setLooping(false);
         _controller.addListener(() {
-          print("Status: ${_controller.value}");
           if (_controller.value.position == _controller.value.duration) {
             init();
           }
@@ -39,48 +42,24 @@ class SplashScreenState extends State<SplashScreen> {
       });
   }
 
-  void init() async {
-    // if (sharedPref.getBool(IS_FIRST_TIME) ?? true) {
-    launchScreen(context, WalkThroughScreen(),
-        pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+  void init() {
+    final token = appStorage.read(tokenKey);
+    final initialized = appStorage.read(initializedKey);
+    if (token != null && initialized != null) {
+      launchScreen(context, BookingScreen(), isNewTask: true);
+    } else if (token == null && initialized != null) {
+      launchScreen(context, LoginScreen(),
+          pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+    } else {
+      launchScreen(context, WalkThroughScreen(),
+          pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+    }
+  }
 
-    // await Geolocator.requestPermission().then((value) async {
-    //   await Geolocator.getCurrentPosition().then((value) {
-    //     sharedPref.setDouble(LATITUDE, value.latitude);
-    //     sharedPref.setDouble(LONGITUDE, value.longitude);
-    //     launchScreen(context, WalkThroughScreen(),
-    //         pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
-    //   });
-    // }).catchError((e) {
-    //   launchScreen(context, WalkThroughScreen(),
-    //       pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
-    // });
-    // } else {
-    //   if (!appStore.isLoggedIn) {
-    //     launchScreen(context, SocialScreen(),
-    //         pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
-    //   } else {
-    //     if (sharedPref.getString(CONTACT_NUMBER).validate().isEmptyOrNull) {
-    //       launchScreen(context, EditProfileScreen(isGoogle: true),
-    //           isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
-    //     } else {
-    //       if (await checkPermission())
-    //         await Geolocator.requestPermission().then((value) async {
-    //           await Geolocator.getCurrentPosition().then((value) {
-    //             sharedPref.setDouble(LATITUDE, value.latitude);
-    //             sharedPref.setDouble(LONGITUDE, value.longitude);
-    //             launchScreen(context, DashBoardScreen(),
-    //                 pageRouteAnimation: PageRouteAnimation.Slide,
-    //                 isNewTask: true);
-    //           });
-    //         }).catchError((e) {
-    //           launchScreen(context, DashBoardScreen(),
-    //               pageRouteAnimation: PageRouteAnimation.Slide,
-    //               isNewTask: true);
-    //         });
-    //     }
-    //   }
-    // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -89,13 +68,11 @@ class SplashScreenState extends State<SplashScreen> {
       backgroundColor: primaryColor,
       body: GestureDetector(
         onTap: () {
-          launchScreen(context, WalkThroughScreen(),
-              pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+          init();
         },
         child: Center(
           child: Stack(
             children: [
-              // Video player as background
               Positioned.fill(
                 child: _isVideoInitialized
                     ? FittedBox(
