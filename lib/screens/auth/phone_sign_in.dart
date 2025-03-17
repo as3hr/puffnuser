@@ -1,6 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/screens/main/book_ride/booking.dart';
+import 'package:taxi_booking/screens/main/book_ride/booking_screen.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
 import '../../components/submission_button.dart';

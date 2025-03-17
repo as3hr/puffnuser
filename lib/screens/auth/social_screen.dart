@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taxi_booking/screens/auth/login/login_screen.dart';
-import 'package:taxi_booking/utils/Extensions/app_common.dart';
 import '../../components/submission_button.dart';
 import 'register/register_screen.dart';
 
@@ -44,10 +44,7 @@ class SocialScreen extends StatelessWidget {
               const SizedBox(height: 48),
               SubmissionButton(
                 onTap: () {
-                  launchScreen(
-                    context,
-                    LoginScreen(),
-                  );
+                  Get.to(() => LoginScreen());
                 },
                 text: 'Sign in',
               ),
@@ -90,7 +87,7 @@ class SocialScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      launchScreen(context, RegisterationScreen());
+                      Get.to(() => RegisterationScreen());
                     },
                     child: const Text(
                       'Create here',
@@ -110,45 +107,45 @@ class SocialScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialButton(
-    String text,
-    String iconPath, {
-    required VoidCallback onPressed,
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.black87,
-        backgroundColor: Colors.white,
-        minimumSize: const Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-          side: BorderSide(
-            color: Colors.black.withOpacity(0.1),
-          ),
-        ),
-        elevation: 0,
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(25),
-            child: Image.asset(
-              iconPath,
-              height: 24,
-              width: 24,
-            ),
-          ),
-          Spacer(),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Spacer(),
-        ],
-      ),
-    );
-  }
+  // Widget _buildSocialButton(
+  //   String text,
+  //   String iconPath, {
+  //   required VoidCallback onPressed,
+  // }) {
+  //   return ElevatedButton(
+  //     onPressed: onPressed,
+  //     style: ElevatedButton.styleFrom(
+  //       foregroundColor: Colors.black87,
+  //       backgroundColor: Colors.white,
+  //       minimumSize: const Size(double.infinity, 50),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(25),
+  //         side: BorderSide(
+  //           color: Colors.black.withOpacity(0.1),
+  //         ),
+  //       ),
+  //       elevation: 0,
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         ClipRRect(
+  //           borderRadius: BorderRadius.circular(25),
+  //           child: Image.asset(
+  //             iconPath,
+  //             height: 24,
+  //             width: 24,
+  //           ),
+  //         ),
+  //         Spacer(),
+  //         Text(
+  //           text,
+  //           style: const TextStyle(
+  //             fontSize: 16,
+  //           ),
+  //         ),
+  //         Spacer(),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

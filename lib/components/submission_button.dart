@@ -31,7 +31,10 @@ class SubmissionButton extends StatelessWidget {
         ),
         child: Center(
           child: isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: CircularProgressIndicator(
+                  color: Colors.white,
+                ))
               : Text(
                   text,
                   style: TextStyle(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
-import 'package:get/utils.dart';
 import 'package:taxi_booking/components/input_field.dart';
 import 'package:taxi_booking/components/submission_button.dart';
 import 'package:taxi_booking/screens/auth/login/login_controller.dart';
 import 'package:taxi_booking/screens/auth/register/register_screen.dart';
-import 'package:taxi_booking/utils/Extensions/app_common.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -56,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                           color: const Color(0xFF717171),
                         ),
                       ),
-                      const SizedBox(height: 100),
+                      const SizedBox(height: 70),
                       InputField(
                         label: 'Email',
                         isRequired: true,
@@ -101,15 +99,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              launchScreen(
-                                context,
-                                RegisterationScreen(),
-                                isNewTask: true,
-                                pageRouteAnimation: PageRouteAnimation.Slide,
-                              );
+                              Get.off(() => RegisterationScreen());
                             },
                             child: Text(
-                              'Sign In',
+                              'Register Here',
                               style: TextStyle(
                                 color: const Color(0xFF8555AE),
                                 fontSize: 12,
@@ -119,14 +112,17 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 24),
-                      SubmissionButton(
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            controller.login();
-                          }
-                        },
-                        text: "Continue",
-                      ),
+                      Obx(() {
+                        return SubmissionButton(
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              controller.login();
+                            }
+                          },
+                          text: "Continue",
+                          isLoading: controller.isLoading.value,
+                        );
+                      }),
                     ],
                   ),
                 ),

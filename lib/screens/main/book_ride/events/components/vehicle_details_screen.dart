@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_booking/screens/main/book_ride/chauffuer/chauffuer_booking.dart';
 
+import '../../../../../models/vehicle_model.dart';
+
 class VehicleDetailsScreen extends StatelessWidget {
-  const VehicleDetailsScreen({super.key});
+  const VehicleDetailsScreen({super.key, required this.vehicle});
+  final VehicleModel vehicle;
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taxi_booking/components/user_avatars.dart';
-import 'package:taxi_booking/screens/main/book_ride/events/ticket_selection_screen.dart';
-import 'package:taxi_booking/utils/Extensions/app_common.dart';
+import 'package:taxi_booking/screens/main/book_ride/events/components/ticket_selection_screen.dart';
+
+import '../../../../../models/event_model.dart';
 
 class EventDetailsScreen extends StatelessWidget {
-  const EventDetailsScreen({super.key});
+  const EventDetailsScreen({super.key, required this.event});
+  final EventModel event;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +19,15 @@ class EventDetailsScreen extends StatelessWidget {
             expandedHeight: MediaQuery.of(context).size.height * 0.4,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'images/event_detail.png',
+              background: Image.network(
+                '${event.image}',
+                width: double.infinity,
+                height: 150,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset('images/event.png',
+                      height: 150, fit: BoxFit.cover);
+                },
               ),
             ),
             leading: GestureDetector(
@@ -53,7 +62,7 @@ class EventDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Smoke-Friendly Night Ride 2024',
+                              event.title ?? "",
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -84,7 +93,7 @@ class EventDetailsScreen extends StatelessWidget {
                                       size: 16, color: Colors.white),
                                   SizedBox(width: 2),
                                   Text(
-                                    'Nov 10 2024',
+                                    event.startDate ?? 'No Date',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   SizedBox(width: 6),
@@ -92,7 +101,7 @@ class EventDetailsScreen extends StatelessWidget {
                                       size: 16, color: Colors.white),
                                   SizedBox(width: 2),
                                   Text(
-                                    '08:00 PM',
+                                    event.startTime ?? "",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],
@@ -111,7 +120,7 @@ class EventDetailsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Lorem ipsum dolor sit amet consectetur. Adipiscing eu etiam ut non luctus cursus. Magna tincidunt vulputate nullam aliquet hendrerit volutpat. Et viverra ipsum in sed ornare vitae urna vel id...',
+                              event.description ?? "",
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 height: 1.5,
@@ -169,10 +178,10 @@ class EventDetailsScreen extends StatelessWidget {
                                         height: 50,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            launchScreen(context,
-                                                TicketSelectionScreen(),
-                                                pageRouteAnimation:
-                                                    PageRouteAnimation.Slide);
+                                            Get.to(
+                                              () => TicketSelectionScreen(
+                                                  event: event),
+                                            );
                                           },
                                           child: Text(
                                             'Buy Now',

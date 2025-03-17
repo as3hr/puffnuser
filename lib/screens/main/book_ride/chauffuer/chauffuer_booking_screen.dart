@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import '../../../../components/selection_screen.dart';
 import 'vehicle_selection_screen.dart';
 
-class BookingScreen extends StatefulWidget {
-  const BookingScreen({super.key});
+class ChauffuerBookingScreen extends StatefulWidget {
+  const ChauffuerBookingScreen({super.key});
 
   @override
-  State<BookingScreen> createState() => _BookingScreenState();
+  State<ChauffuerBookingScreen> createState() => _ChauffuerBookingScreenState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _ChauffuerBookingScreenState extends State<ChauffuerBookingScreen> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   int selectedTab = 0;

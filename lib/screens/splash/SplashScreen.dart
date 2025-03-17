@@ -1,12 +1,12 @@
+import 'package:get/get.dart';
 import 'package:taxi_booking/main.dart';
 import 'package:taxi_booking/screens/auth/login/login_screen.dart';
-import 'package:taxi_booking/screens/main/book_ride/booking.dart';
+import 'package:taxi_booking/screens/main/book_ride/booking_screen.dart';
 import 'package:taxi_booking/utils/Constants.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import '../intro/WalkThroughtScreen.dart';
 import '../../../utils/Colors.dart';
-import '../../../utils/Extensions/app_common.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -46,13 +46,11 @@ class SplashScreenState extends State<SplashScreen> {
     final token = appStorage.read(tokenKey);
     final initialized = appStorage.read(initializedKey);
     if (token != null && initialized != null) {
-      launchScreen(context, BookingScreen(), isNewTask: true);
+      Get.to(() => BookingScreen());
     } else if (token == null && initialized != null) {
-      launchScreen(context, LoginScreen(),
-          pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+      Get.to(() => LoginScreen());
     } else {
-      launchScreen(context, WalkThroughScreen(),
-          pageRouteAnimation: PageRouteAnimation.Slide, isNewTask: true);
+      Get.to(() => WalkThroughScreen());
     }
   }
 

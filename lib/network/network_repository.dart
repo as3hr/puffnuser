@@ -132,6 +132,7 @@ class NetworkRepository {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(
           data: response.data,
+          message: response.data['message'] ?? "",
           status: response.statusCode,
         );
       }

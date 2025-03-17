@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:taxi_booking/screens/main/book_ride/events/event_controller.dart';
 
+import '../../../../../models/vehicle_model.dart';
 import 'vehicle_details_screen.dart';
 
 class VehicleListScreen extends StatelessWidget {
@@ -103,27 +106,38 @@ class VehicleListScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             // Vehicle Grid
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return VehicleCard(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const VehicleDetailsScreen(),
+            GetBuilder<EventController>(builder: (controller) {
+              final vehicles = controller.serviceDetail.vehicles ?? [];
+              return vehicles.isEmpty
+                  ? Center(
+                      child: Text("No Vechicles Found"),
+                    )
+                  : Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.75,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: vehicles.length,
+                        itemBuilder: (context, index) {
+                          final vehicle = vehicles[index];
+                          return VehicleCard(
+                            vehicle: vehicle,
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    VehicleDetailsScreen(vehicle: vehicle),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                    );
+            }),
           ],
         ),
       ),
@@ -132,9 +146,13 @@ class VehicleListScreen extends StatelessWidget {
 }
 
 class VehicleCard extends StatelessWidget {
+  const VehicleCard({
+    super.key,
+    required this.vehicle,
+    required this.onTap,
+  });
   final VoidCallback onTap;
-
-  const VehicleCard({super.key, required this.onTap});
+  final VehicleModel vehicle;
 
   @override
   Widget build(BuildContext context) {
@@ -170,16 +188,16 @@ class VehicleCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Mercedes-Benz S600',
+                    Text(
+                      vehicle.name ?? "",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
                           color: Colors.white),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '\$150.75',
+                    Text(
+                      '\$${vehicle.numberPlate ?? ""}',
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                     const SizedBox(height: 10),

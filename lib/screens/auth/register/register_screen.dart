@@ -124,10 +124,10 @@ class RegisterationScreen extends StatelessWidget {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Email is required';
+                          return 'Phone Number is required';
                         }
                         if (!GetUtils.isPhoneNumber(value)) {
-                          return 'Invalid Email';
+                          return 'Invalid Phone Number';
                         }
                         return null;
                       },
@@ -196,14 +196,17 @@ class RegisterationScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    SubmissionButton(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          controller.register();
-                        }
-                      },
-                      text: "Continue",
-                    ),
+                    Obx(() {
+                      return SubmissionButton(
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            controller.register();
+                          }
+                        },
+                        text: "Continue",
+                        isLoading: controller.isLoading.value,
+                      );
+                    }),
                   ],
                 ),
               ),

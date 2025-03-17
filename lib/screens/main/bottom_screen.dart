@@ -6,7 +6,7 @@ import 'package:taxi_booking/screens/main/profile/profile.dart';
 
 import 'book_ride/events/event_page.dart';
 
-enum ScreenType {
+enum BookingScreenType {
   event,
   chauffuer,
   luxuryParty,
@@ -17,7 +17,7 @@ class BottomScreen extends StatefulWidget {
     super.key,
     required this.screenType,
   });
-  final ScreenType screenType;
+  final BookingScreenType screenType;
 
   @override
   _BottomScreenState createState() => _BottomScreenState();
@@ -38,7 +38,7 @@ class _BottomScreenState extends State<BottomScreen> {
   void initState() {
     super.initState();
     switch (widget.screenType) {
-      case ScreenType.event:
+      case BookingScreenType.event:
         _widgetOptions = [
           EventPage(),
           HomeScreen(),
@@ -46,7 +46,7 @@ class _BottomScreenState extends State<BottomScreen> {
           Profile(),
         ];
         break;
-      case ScreenType.chauffuer:
+      case BookingScreenType.chauffuer:
         _widgetOptions = [
           HomeScreen(),
           HomeScreen(),
@@ -54,7 +54,7 @@ class _BottomScreenState extends State<BottomScreen> {
           Profile(),
         ];
         break;
-      case ScreenType.luxuryParty:
+      case BookingScreenType.luxuryParty:
         _widgetOptions = [
           NavigationScreen(),
           HomeScreen(),

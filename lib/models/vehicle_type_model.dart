@@ -1,5 +1,5 @@
 class VehicleTypeModel {
-  String? id;
+  int? id;
   String? name;
 
   VehicleTypeModel({this.id, this.name});

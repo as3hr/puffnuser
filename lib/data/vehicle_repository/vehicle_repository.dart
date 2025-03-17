@@ -5,7 +5,7 @@ import '../../utils/Common.dart';
 class VehicleRepository {
   Future<List<VehicleTypeModel>> getVehicleTypes() async {
     final response = await networkRepository.get(url: "/get-vehicle-types");
-    final data = response.data["data"];
+    final data = response.data["types"];
     return parseList(data, VehicleTypeModel.fromJson);
   }
 }

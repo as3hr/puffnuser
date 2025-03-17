@@ -10,10 +10,13 @@ class ServiceRepository {
     return parseList(data, ServiceModel.fromJson);
   }
 
-  Future<ServiceDetailModel> getServiceById(String id) async {
+  Future<ServiceDetailModel> getServiceById(
+      {required int id, Map<String, dynamic>? extraQuery}) async {
     final response =
         await networkRepository.get(url: "/get-service-details/", extraQuery: {
       "id": id,
+      "location": "karachi",
+      ...?extraQuery,
     });
     final data = response.data["data"];
     return ServiceDetailModel.fromJson(data);

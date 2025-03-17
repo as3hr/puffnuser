@@ -25,6 +25,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: mAppName,
       defaultTransition: Transition.fadeIn,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+      ),
       home: SplashScreen(),
     );
   }

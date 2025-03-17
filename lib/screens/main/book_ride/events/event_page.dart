@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taxi_booking/components/user_avatars.dart';
-import 'package:taxi_booking/screens/main/book_ride/events/app_notification_screen.dart';
-import 'package:taxi_booking/screens/main/book_ride/events/event_detail_screen.dart';
+import 'package:taxi_booking/screens/main/book_ride/events/components/app_notification_screen.dart';
+import 'package:taxi_booking/screens/main/book_ride/events/components/event_detail_screen.dart';
 
+import '../../../../models/category_model.dart';
+import '../../../../models/event_model.dart';
 import '../../../../utils/Extensions/app_common.dart';
+import 'event_controller.dart';
 
 class EventPage extends StatelessWidget {
   const EventPage({super.key});
@@ -35,7 +39,7 @@ class EventPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 5),
               child: Text(
-                'New Yourk, USA',
+                'Karachi',
                 style: TextStyle(color: Colors.black, fontSize: 12),
               ),
             ),
@@ -140,98 +144,153 @@ class EventPage extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-                // Category Chips
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildChip('All', true),
-                      _buildChip('Music', false),
-                      _buildChip('Festival', false),
-                      _buildChip('Sport', false),
-                      _buildChip('Movie', false),
-                    ],
-                  ),
-                ),
+                GetBuilder(
+                    init: EventController(),
+                    builder: (controller) {
+                      return controller.isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Column(
+                              children: [
+                                // Category Chips
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        _buildChip(
+                                          'All',
+                                          controller.selectedCategoryIndex
+                                                  .value ==
+                                              0,
+                                          onTap: () {
+                                            controller.selectCategory(0);
+                                          },
+                                        ),
+                                        ...controller.categories
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                          int idx = entry.key + 1;
+                                          CategoryModel category = entry.value;
+                                          return _buildChip(
+                                            category.title,
+                                            controller.selectedCategoryIndex
+                                                    .value ==
+                                                idx,
+                                            onTap: () {
+                                              print(
+                                                  'Selected category: ${category.title}');
+                                              controller.selectCategory(idx);
+                                            },
+                                          );
+                                        }).toList(),
+                                      ],
+                                    )),
 
-                SizedBox(height: 20),
+                                SizedBox(height: 20),
 
-                // Nearby Car Events Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Nearby Car Events',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See All',
-                        style: TextStyle(
-                          color: Color(0xFFAB29FF),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Nearby Car Events',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        'See All',
+                                        style: TextStyle(
+                                          color: Color(0xFFAB29FF),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                SizedBox(height: 10),
+                                SizedBox(height: 10),
 
-                // Event Cards Row
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            launchScreen(context, EventDetailsScreen(),
-                                pageRouteAnimation: PageRouteAnimation.Slide);
-                          },
-                          child: _buildEventCard()),
-                      SizedBox(width: 16),
-                      GestureDetector(
-                          onTap: () {
-                            launchScreen(context, EventDetailsScreen(),
-                                pageRouteAnimation: PageRouteAnimation.Slide);
-                          },
-                          child: _buildEventCard()),
-                    ],
-                  ),
-                ),
+                                // Event Cards Row
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      ...?controller.serviceDetail.nearbyEvents
+                                          ?.map((event) => Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 16),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Get.to(
+                                                      () => EventDetailsScreen(
+                                                        event: event,
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: _buildEventCard(event),
+                                                ),
+                                              )),
+                                    ],
+                                  ),
+                                ),
 
-                SizedBox(height: 20),
+                                SizedBox(height: 20),
 
-                // Popular Now Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Popular Now',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See All',
-                        style: TextStyle(
-                          color: Color(0xFFAB29FF),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Popular Now',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        'See All',
+                                        style: TextStyle(
+                                          color: Color(0xFFAB29FF),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                SizedBox(height: 10),
+                                SizedBox(height: 10),
 
-                // Popular Event Card
-                _buildPopularEventCard(),
+                                // Popular Event Card
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      ...?controller
+                                          .serviceDetail.featuredEvents
+                                          ?.map((event) => Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 16),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.8,
+                                                  child: _buildPopularEventCard(
+                                                      event),
+                                                ),
+                                              )),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                    }),
               ],
             ),
           ),
@@ -240,28 +299,31 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(String label, bool isSelected) {
+  Widget _buildChip(String label, bool isSelected, {VoidCallback? onTap}) {
     return Container(
       margin: EdgeInsets.only(right: 8),
-      child: Chip(
-        label: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontSize: 12,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Chip(
+          label: Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontSize: 12,
+            ),
           ),
+          backgroundColor: isSelected ? Color(0xFFAB29FF) : Colors.white,
+          side: BorderSide(
+            color: Colors.black,
+            width: 1,
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 12),
         ),
-        backgroundColor: isSelected ? Color(0xFFAB29FF) : Colors.white,
-        side: BorderSide(
-          color: Colors.black,
-          width: 1,
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 12),
       ),
     );
   }
 
-  Widget _buildEventCard() {
+  Widget _buildEventCard(EventModel event) {
     return Card(
       elevation: 5,
       child: Container(
@@ -284,10 +346,15 @@ class EventPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset(
-                'images/event.png',
+              child: Image.network(
+                '${event.image}',
                 width: double.infinity,
+                height: 150,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset('images/event.png',
+                      height: 150, fit: BoxFit.cover);
+                },
               ),
             ),
             Padding(
@@ -296,7 +363,7 @@ class EventPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Smoke-Friendly Night Ride',
+                    event.title ?? 'No Title',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -305,32 +372,18 @@ class EventPage extends StatelessWidget {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(
-                        Icons.calendar_month,
-                        color: Colors.grey,
-                        size: 16,
-                      ),
+                      Icon(Icons.calendar_month, color: Colors.grey, size: 16),
                       SizedBox(width: 2),
                       Text(
-                        'Nov 10 2024',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
+                        event.startDate ?? 'No Date',
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                       SizedBox(width: 6),
-                      Icon(
-                        Icons.access_time,
-                        color: Colors.grey,
-                        size: 16,
-                      ),
+                      Icon(Icons.access_time, color: Colors.grey, size: 16),
                       SizedBox(width: 2),
                       Text(
-                        '08.00 PM',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
+                        event.startTime?.substring(0, 5) ?? 'No Time',
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ],
                   ),
@@ -345,20 +398,17 @@ class EventPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding:
-                            EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                        child: Center(
-                          child: Text(
-                            "Book Now",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 9,
-                            ),
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Text(
+                          "\$${event.ticket?.price ?? 0}",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
                 ],
               ),
             ),
@@ -368,7 +418,7 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPopularEventCard() {
+  Widget _buildPopularEventCard(EventModel event) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -388,24 +438,15 @@ class EventPage extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: Image.asset(
-                  'images/luxury.png',
-                ),
-              ),
-              Positioned(
-                top: 16,
-                left: 16,
-                child: UserAvatars(),
-              ),
-              Positioned(
-                top: 16,
-                right: 16,
-                child: CircleAvatar(
-                  backgroundColor: Color(0xffD813C4).withOpacity(0.4),
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                  ),
+                child: Image.network(
+                  '${event.image}',
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset('images/luxury.png',
+                        height: 200, fit: BoxFit.cover);
+                  },
                 ),
               ),
               Positioned(
@@ -431,38 +472,44 @@ class EventPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Luxury Party Night',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  event.title ?? 'No Title',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              Text(
-                                "Lorem ipsum dolor sit\namet consectetur.",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
+                                Text(
+                                  event.description ?? 'No Description',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
+                              // Text(
+                              //   '\$${event.ticket?.price ?? 0}',
+                              //   style: TextStyle(
+                              //     color: Color(0xFFAB29FF),
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 20,
+                              //   ),
+                              // ),
                               Text(
-                                '\$20',
-                                style: TextStyle(
-                                  color: Color(0xFFAB29FF),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'November 7 2024',
+                                event.startDate ?? 'No Date',
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14,

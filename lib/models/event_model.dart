@@ -1,3 +1,5 @@
+import 'package:taxi_booking/models/ticket_model.dart';
+
 class EventModel {
   int? id;
   int? newServiceId;
@@ -13,8 +15,10 @@ class EventModel {
   double? longitude;
   String? image;
   int? isFeature;
+  TicketModel? ticket;
 
   EventModel({
+    this.ticket,
     this.id,
     this.newServiceId,
     this.title,
@@ -47,6 +51,8 @@ class EventModel {
       longitude: _parseDouble(json['longitude']),
       image: json['image'],
       isFeature: json['is_feature']?.toInt(),
+      ticket:
+          json["ticket"] != null ? TicketModel.fromJson(json["ticket"]) : null,
     );
   }
 

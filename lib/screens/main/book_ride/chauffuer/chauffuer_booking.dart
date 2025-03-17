@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
-import '../events/payment_screen.dart';
+import '../events/components/payment_screen.dart';
 
 class ChauffeurBookingScreen extends StatelessWidget {
   const ChauffeurBookingScreen({Key? key}) : super(key: key);

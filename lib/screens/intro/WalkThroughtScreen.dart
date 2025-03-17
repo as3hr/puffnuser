@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taxi_booking/main.dart';
 import 'package:taxi_booking/screens/auth/social_screen.dart';
 
@@ -106,7 +107,7 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
                 NextButton(
                     text: "Book Now",
                     onPressed: () {
-                      launchScreen(context, SocialScreen(), isNewTask: true);
+                      Get.to(() => SocialScreen());
                     }),
                 SizedBox(height: 28),
               ],
@@ -117,7 +118,7 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
             right: 0,
             child: TextButton(
               onPressed: () {
-                launchScreen(context, SocialScreen(), isNewTask: true);
+                Get.to(() => SocialScreen());
               },
               child: Text("Skip", style: boldTextStyle(color: Colors.white)),
             ),

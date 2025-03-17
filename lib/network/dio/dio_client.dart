@@ -48,9 +48,11 @@ class DioClient {
     print("Error Type: ${error.toString()}");
     if (error.response?.data != null) {
       print("Error Response: ${error.response?.data}");
-      // final responseData = error.response!.data;
-      // message = responseData["message"] ?? "Unknown error occurred";
-      // data = responseData["data"] ?? "";
+      final responseData = error.response!.data;
+      message = responseData["message"] ??
+          responseData["error"] ??
+          "Unknown error occurred";
+      data = responseData["data"] ?? "";
     } else {
       switch (error.type) {
         case DioExceptionType.cancel:

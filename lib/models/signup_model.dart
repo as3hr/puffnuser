@@ -22,10 +22,10 @@ class SignupModel {
       "first_name": firstName,
       "last_name": lastName,
       "email": email,
-      "password": password,
-      "confirm_password": confirmPassword,
-      "user_name": userName,
-      "phone_number": phoneNumber,
+      "password": password.trim(),
+      "password_confirmation": confirmPassword.trim(),
+      "username": userName,
+      "phone": phoneNumber,
     };
   }
 }

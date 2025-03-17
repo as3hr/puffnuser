@@ -15,7 +15,7 @@ class NeedsScreen extends StatelessWidget {
       onContinue: () {
         launchScreen(
           context,
-          BottomScreen(screenType: ScreenType.luxuryParty),
+          BottomScreen(screenType: BookingScreenType.luxuryParty),
           pageRouteAnimation: PageRouteAnimation.Slide,
         );
       },

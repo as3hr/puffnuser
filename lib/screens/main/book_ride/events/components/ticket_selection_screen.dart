@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_booking/utils/Extensions/app_common.dart';
+import 'package:get/get.dart';
+import 'package:taxi_booking/models/event_model.dart';
 
 import 'vehicle_list_screen.dart';
 
 class TicketSelectionScreen extends StatefulWidget {
-  const TicketSelectionScreen({super.key});
+  const TicketSelectionScreen({super.key, required this.event});
+  final EventModel event;
 
   @override
   State<TicketSelectionScreen> createState() => _TicketSelectionScreenState();
 }
 
 class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
-  int _quantity = 2;
+  int _quantity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _quantity = (widget.event.ticket?.quantity ?? 0);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +100,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'March 29, 2024 • 8 AM',
+                                      widget.event.startDate ?? "",
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 12,
@@ -97,7 +108,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                                     ),
                                     SizedBox(height: 4),
                                     Text(
-                                      'Texas Art Festival: 2024 Dana Point 29-30',
+                                      widget.event.address ?? "",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -109,7 +120,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                                             size: 16, color: Colors.grey),
                                         SizedBox(width: 4),
                                         Text(
-                                          'California, CA',
+                                          widget.event.description ?? "",
                                           style: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,
@@ -121,7 +132,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                                 ),
                               ),
                               Text(
-                                '\$35.00',
+                                "\$${widget.event.ticket?.price ?? 0}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFF122981),
@@ -150,14 +161,14 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      if (_quantity > 1) {
+                                      if ((_quantity) > 1) {
                                         setState(() => _quantity--);
                                       }
                                     },
                                     icon: Icon(Icons.remove),
                                   ),
                                   Text(
-                                    '$_quantity',
+                                    "${_quantity}",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -210,7 +221,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                       style: TextStyle(color: Colors.grey),
                     ),
                     Text(
-                      '\$${(_quantity * 35).toStringAsFixed(2)}',
+                      '\$${((_quantity) * (widget.event.ticket?.price ?? 0)).toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -223,11 +234,7 @@ class _TicketSelectionScreenState extends State<TicketSelectionScreen> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      launchScreen(
-                        context,
-                        VehicleListScreen(),
-                        pageRouteAnimation: PageRouteAnimation.Slide,
-                      );
+                      Get.to(() => VehicleListScreen());
                     },
                     child: Text(
                       'Add to Cart',
