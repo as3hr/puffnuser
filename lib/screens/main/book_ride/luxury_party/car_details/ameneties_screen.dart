@@ -29,7 +29,7 @@ class AmenitiesScreen extends StatelessWidget {
                 selectionType: SelectionType.checkbox,
                 allowMultiple: true,
                 options: options,
-                onSelectionChanged: (List<SelectionOption> selectedOptions) {
+                onSelectionChanged: (selectedOptions) {
                   controller.selectedAmenities.clear();
                   controller.selectedAmenities.addAll(selectedOptions
                       .where((option) => option.selected)

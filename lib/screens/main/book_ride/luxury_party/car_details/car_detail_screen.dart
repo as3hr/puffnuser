@@ -3,9 +3,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:taxi_booking/screens/main/book_ride/luxury_party/ride_booking.dart';
 import 'package:taxi_booking/utils/Extensions/app_common.dart';
 
-class CarDetailsScreen extends StatelessWidget {
-  const CarDetailsScreen({Key? key}) : super(key: key);
+import '../../../../../models/vehicle_model.dart';
 
+class CarDetailsScreen extends StatelessWidget {
+  const CarDetailsScreen({Key? key, required this.vehicle}) : super(key: key);
+  final VehicleModel vehicle;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,8 +69,8 @@ class CarDetailsScreen extends StatelessWidget {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        const Text(
-                          'BMW 840i',
+                        Text(
+                          vehicle.numberPlate ?? "",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 34,
@@ -175,7 +177,7 @@ class CarDetailsScreen extends StatelessWidget {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    title: const Text(
+                                    title: Text(
                                       'Mark Campbell',
                                       style: TextStyle(
                                         color: Colors.black,
@@ -192,7 +194,7 @@ class CarDetailsScreen extends StatelessWidget {
                                     trailing: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text(
+                                        Text(
                                           '110 Reviews',
                                           style: TextStyle(
                                             color: Colors.black,
@@ -253,7 +255,7 @@ class CarDetailsScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '\$254.00',
+                                  vehicle.flatRate ?? "",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,

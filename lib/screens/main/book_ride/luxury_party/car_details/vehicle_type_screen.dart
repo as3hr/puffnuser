@@ -15,7 +15,6 @@ class VehicleTypeScreen extends StatelessWidget {
       body: GetBuilder<LuxuryPartyController>(
           init: LuxuryPartyController(),
           builder: (controller) {
-            print(controller.vehicleTypes);
             return controller.isLoading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -37,9 +36,9 @@ class VehicleTypeScreen extends StatelessWidget {
                       }
                     },
                     onSelectionChanged: (options) {
-                      // final selectedOption =
-                      //     options.firstWhere((element) => element.selected);
-                      // controller.vehicleTypes =
+                      final selectedOption =
+                          options.firstWhere((element) => element.selected);
+                      controller.selectedVehicleType = selectedOption.id;
                     },
                   );
           }),

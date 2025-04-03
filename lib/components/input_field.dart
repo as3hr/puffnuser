@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InputField extends StatelessWidget {
+class InputField extends StatefulWidget {
   const InputField({
     super.key,
     required this.label,
@@ -15,7 +15,12 @@ class InputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String) onChanged;
 
-  static final _isPasswordVisible = ValueNotifier<bool>(false);
+  @override
+  State<InputField> createState() => _InputFieldState();
+}
+
+class _InputFieldState extends State<InputField> {
+  final _isPasswordVisible = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +32,22 @@ class InputField extends StatelessWidget {
             valueListenable: _isPasswordVisible,
             builder: (context, value, _) {
               return TextFormField(
-                obscureText: isPassword ? value : false,
-                onChanged: onChanged,
-                validator: validator,
+                obscureText: widget.isPassword ? value : false,
+                onChanged: widget.onChanged,
+                validator: widget.validator,
                 onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   label: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        label,
+                        widget.label,
                         style: TextStyle(
                           color: const Color(0xFF717171),
                           fontSize: 14,
                         ),
                       ),
-                      if (isRequired)
+                      if (widget.isRequired)
                         Text(
                           ' *',
                           style: TextStyle(
@@ -56,7 +61,7 @@ class InputField extends StatelessWidget {
                     horizontal: 16,
                     vertical: 12,
                   ),
-                  suffixIcon: isPassword
+                  suffixIcon: widget.isPassword
                       ? IconButton(
                           icon: Icon(
                             value ? Icons.visibility : Icons.visibility_off,

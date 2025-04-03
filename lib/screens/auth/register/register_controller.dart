@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taxi_booking/data/auth_repository/auth_repository.dart';
-import 'package:taxi_booking/main.dart';
-import 'package:taxi_booking/screens/main/book_ride/booking_screen.dart';
+import 'package:taxi_booking/screens/auth/login/login_screen.dart';
 
 import '../../../models/signup_model.dart';
 import '../verify_email.dart';
@@ -10,6 +9,7 @@ import '../verify_email.dart';
 class RegisterController extends GetxController {
   final signUpUser = SignupModel();
   RxBool isLoading = false.obs;
+  RxBool isOtpLoading = false.obs;
   final otpValues = List.generate(5, (index) => "");
 
   final authRepository = AuthRepository();
@@ -42,14 +42,14 @@ class RegisterController extends GetxController {
   }
 
   Future<void> verifyOtp() async {
+    isOtpLoading.value = true;
     try {
-      final user = await authRepository.verifyOtp(
+      final response = await authRepository.verifyOtp(
         email: signUpUser.email,
         otp: otpValues.join(),
       );
-      if (user != null) {
-        appStorage.write("user", user.toJson());
-        Get.to(() => BookingScreen());
+      if (response) {
+        Get.offUntil(GetPageRoute(page: () => LoginScreen()), (_) => false);
         Get.snackbar(
           "Success",
           "Otp Verified Successfully",
@@ -67,7 +67,7 @@ class RegisterController extends GetxController {
         colorText: Colors.white,
       );
     } finally {
-      isLoading.value = false;
+      isOtpLoading.value = false;
     }
   }
 }

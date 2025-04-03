@@ -61,9 +61,7 @@ class VerifyEmail extends StatelessWidget {
                             onChanged: (value) {
                               if (value.length == 1) {
                                 controller.otpValues[index] = value;
-                                if (index == controller.otpValues.length - 1) {
-                                  controller.verifyOtp();
-                                } else {
+                                if (index != controller.otpValues.length - 1) {
                                   FocusScope.of(context).nextFocus();
                                 }
                               }
@@ -79,12 +77,15 @@ class VerifyEmail extends StatelessWidget {
                   ).toList(),
                 ),
                 const SizedBox(height: 50),
-                SubmissionButton(
-                  onTap: () {
-                    controller.verifyOtp();
-                  },
-                  text: "Continue",
-                ),
+                Obx(() {
+                  return SubmissionButton(
+                    onTap: () {
+                      controller.verifyOtp();
+                    },
+                    text: "Continue",
+                    isLoading: controller.isOtpLoading.value,
+                  );
+                }),
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

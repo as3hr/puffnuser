@@ -10,14 +10,16 @@ import '../../../../models/event_model.dart';
 class EventController extends GetxController {
   final serviceRepository = ServiceRepository();
   late ServiceDetailModel serviceDetail;
-  bool isLoading = false;
+  bool isServicesLoading = false;
+  bool isCategoriesLoading = false;
+  Map<String, dynamic> extraQuery = {};
 
   List<EventModel> get nearbyEvents => serviceDetail.nearbyEvents ?? [];
   List<EventModel> get featuredEvents => serviceDetail.featuredEvents ?? [];
 
   final categories = <CategoryModel>[].obs;
 
-  RxInt selectedCategoryIndex = 0.obs;
+  RxInt selectedCategory = 0.obs;
 
   @override
   void onInit() {
@@ -28,28 +30,40 @@ class EventController extends GetxController {
 
   void getCategories() async {
     try {
+      isCategoriesLoading = true;
+      update();
       final categoryData = await EventRepository().getCategories();
       categories.assignAll(categoryData);
       update();
     } catch (e) {
       print('Error fetching categories: $e');
+    } finally {
+      isCategoriesLoading = false;
+      update();
     }
   }
 
-  void selectCategory(int index) {
-    selectedCategoryIndex.value = index;
+  void selectCategory(int id) {
+    selectedCategory.value = id;
+    getServiceDetail();
     update();
   }
 
+  void clearCategorFilter() {}
+
   void getServiceDetail() async {
-    isLoading = true;
+    isServicesLoading = true;
     update();
     final serviceId = Get.find<BookingController>().selectedServiceId;
     serviceDetail = await serviceRepository.getServiceById(
       id: serviceId,
-      extraQuery: {},
+      extraQuery: selectedCategory.value != 0
+          ? {
+              "event_category_id": selectedCategory.value,
+            }
+          : null,
     );
-    isLoading = false;
+    isServicesLoading = false;
     update();
   }
 }

@@ -36,8 +36,8 @@ class VehicleDetailsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'BMW 840i',
+                      Text(
+                        '${vehicle.name} ${vehicle.numberPlate}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -60,13 +60,13 @@ class VehicleDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   // Location and Details
-                  const Row(
+                  Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      Text('Kaliwiro City'),
+                      Text('${vehicle.name}'),
                       SizedBox(width: 16),
                       Icon(Icons.person, color: Colors.black),
-                      Text('4'),
+                      Text('${vehicle.noOfPassenger}'),
                       SizedBox(width: 16),
                       Icon(Icons.settings, color: Colors.black),
                       Text('Manual'),
@@ -82,9 +82,7 @@ class VehicleDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                  ),
+                  Text(vehicle.name ?? ""),
                   const SizedBox(height: 16),
                   // Map
                   Container(

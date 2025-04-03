@@ -147,76 +147,67 @@ class EventPage extends StatelessWidget {
                 GetBuilder(
                     init: EventController(),
                     builder: (controller) {
-                      return controller.isLoading
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Column(
-                              children: [
-                                // Category Chips
-                                SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        _buildChip(
-                                          'All',
-                                          controller.selectedCategoryIndex
-                                                  .value ==
-                                              0,
-                                          onTap: () {
-                                            controller.selectCategory(0);
+                      return Column(
+                        children: [
+                          controller.isCategoriesLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : // Category Chips
+                              SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      _buildChip(
+                                        CategoryModel(id: 0, title: "All"),
+                                        controller.selectedCategory.value == 0,
+                                        onTap: (_) {
+                                          controller.selectCategory(0);
+                                        },
+                                      ),
+                                      ...controller.categories.map((category) {
+                                        return _buildChip(
+                                          category,
+                                          controller.selectedCategory.value ==
+                                              category.id,
+                                          onTap: (_) {
+                                            controller
+                                                .selectCategory(category.id);
                                           },
-                                        ),
-                                        ...controller.categories
-                                            .asMap()
-                                            .entries
-                                            .map((entry) {
-                                          int idx = entry.key + 1;
-                                          CategoryModel category = entry.value;
-                                          return _buildChip(
-                                            category.title,
-                                            controller.selectedCategoryIndex
-                                                    .value ==
-                                                idx,
-                                            onTap: () {
-                                              print(
-                                                  'Selected category: ${category.title}');
-                                              controller.selectCategory(idx);
-                                            },
-                                          );
-                                        }).toList(),
-                                      ],
-                                    )),
-
-                                SizedBox(height: 20),
-
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Nearby Car Events',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'See All',
-                                        style: TextStyle(
-                                          color: Color(0xFFAB29FF),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                        );
+                                      }).toList(),
+                                    ],
+                                  )),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Nearby Car Events',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
-
-                                SizedBox(height: 10),
-
-                                // Event Cards Row
-                                SingleChildScrollView(
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'See All',
+                                  style: TextStyle(
+                                    color: Color(0xFFAB29FF),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          controller.isServicesLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              :
+                              // Event Cards Row
+                              SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: [
@@ -238,36 +229,36 @@ class EventPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-
-                                SizedBox(height: 20),
-
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Popular Now',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'See All',
-                                        style: TextStyle(
-                                          color: Color(0xFFAB29FF),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Popular Now',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
-
-                                SizedBox(height: 10),
-
-                                // Popular Event Card
-                                SingleChildScrollView(
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'See All',
+                                  style: TextStyle(
+                                    color: Color(0xFFAB29FF),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          controller.isServicesLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              :
+                              // Popular Event Card
+                              SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: [
@@ -288,8 +279,8 @@ class EventPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                              ],
-                            );
+                        ],
+                      );
                     }),
               ],
             ),
@@ -299,14 +290,17 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(String label, bool isSelected, {VoidCallback? onTap}) {
+  Widget _buildChip(CategoryModel category, bool isSelected,
+      {void Function(CategoryModel category)? onTap}) {
     return Container(
       margin: EdgeInsets.only(right: 8),
       child: GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          onTap?.call(category);
+        },
         child: Chip(
           label: Text(
-            label,
+            category.title,
             style: TextStyle(
               color: isSelected ? Colors.white : Colors.black,
               fontSize: 12,

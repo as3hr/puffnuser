@@ -46,8 +46,7 @@ class AuthRepository {
     }
   }
 
-  Future<UserModel?> verifyOtp(
-      {required String email, required String otp}) async {
+  Future<bool> verifyOtp({required String email, required String otp}) async {
     final response = await networkRepository.post(
       url: "/customer/verify-otp",
       data: {
@@ -63,10 +62,9 @@ class AuthRepository {
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
-      return null;
+      return false;
     } else {
-      final data = response.data['data'];
-      return UserModel.fromJson(data);
+      return true;
     }
   }
 

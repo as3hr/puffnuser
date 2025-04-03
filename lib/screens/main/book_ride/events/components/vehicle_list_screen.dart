@@ -197,7 +197,7 @@ class VehicleCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '\$${vehicle.numberPlate ?? ""}',
+                      '${vehicle.numberPlate ?? ""}',
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                     const SizedBox(height: 10),
